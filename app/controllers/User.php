@@ -20,7 +20,7 @@ class User extends Controller{
 
             $this->users->register($name,$image,$email,$pwd,$tel,$adress);
             
-            $this->view('Templates/contact');
+            $this->view('Templates/signin');
         };
     }
 
@@ -33,12 +33,11 @@ class User extends Controller{
             $return = $this->users->log($email,$pwd);
 
             if($return){
-                echo "loged in";
-                // header('Location:'.URLROOT.'ElectroSite/public/Admin/show');            
+                $_SESSION['user'] = $email;
+                header('Location:'.URLROOT.'ElectroSite/public/Pages/cart');
             }else{
-                echo "user not found";
+                $this->view('Templates/signin');
             }
-
         };
     }
 
@@ -110,6 +109,51 @@ class User extends Controller{
 
 
 
+        }
+    }
+    //--------------------------------------------
+    public function sendCommande() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $products = $_POST['products'];
+            $quantity = $_POST['quantity'];
+            // $total = $this->users->totalPrice();
+            // print_r($products);
+            // echo "////";
+            // print_r($quantity);
+            // die();
+            $data = [
+                'id_client' => 1,
+                'creation_date' => date('d-m-y'),
+            ];
+
+            $idCommande = $this->users->createCommande($data);
+            if ($idCommande) {
+
+                for ($i = 0; $i < count($products); $i++){
+                    $data = [
+                        'id_product' => $products[$i],
+                        'id_commande' => $idCommande,
+                        'quantite' => $quantity[$i],
+                    ];
+                    $this->users->addProductCommande($data);
+                }
+                
+                if ($this->users->finishCommande()) {
+                    $this->users->clearPanier();
+                    header('Location : '.URLROOT.'ElectroSite/public/Pages/cart');
+                } else {
+                    die('SOMETHING WRONG ???');
+                }
+            }
+        }
+    }
+    //--------------------------------------------
+    public function checkLogin(){
+        
+        if(isset($_SESSION['user'])){
+            $this->sendCommande();
+        }else{
+            $this->view('Templates/signin');
         }
     }
 }

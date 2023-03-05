@@ -183,13 +183,16 @@ Project type: E-commerce web site
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
-						</a>
-
-						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
-						</a>
+						<form action="<?= URLROOT?>ElectroSite/Public/User/sendCommande" method="POST">
+							<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+								View Cart
+							</a>
+							<?php foreach ($data['products'] as $panier) : ?>
+								<input type="text" name="products[]" value="<?= $panier->id_p ?>" class="hiddenInp" hidden>
+								<input type="text" name="quantity[]" value="<?= $panier->quantite ?>" id="quantite" hidden>
+							<?php endforeach ?>
+								<button type="submit" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">Check Out</button>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -198,7 +201,7 @@ Project type: E-commerce web site
 		
 
 	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85" action="<?= URLROOT?>ElectroSite/User/deleteCart" method="POST">
+	<form class="bg0 p-t-75 p-b-85" action="<?=URLROOT?>ElectroSite/User/updateCart" method="POST">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
@@ -218,10 +221,13 @@ Project type: E-commerce web site
 									<td class="column-1">
 										<div class="how-itemcart">
 											<img src="<?= URLROOT.'ElectroSite/public/images/upload/' . $prod['image']?>" alt="IMG">
-											<form action="<?=URLROOT?>ElectroSite/User/deleteCart" method="POST">
+											<form ></form>
+											<form action="<?=URLROOT?>ElectroSite/User/deleteCart" method="post">
 												<input type="hidden" name="This_id" value="<?= $prod['id_product']?>">
 												<button type="submit">X</button>
 											</form>
+												
+											
 										</div>
 									</td>
 									<td class="column-2"><?= $prod['label']?></td>
@@ -334,10 +340,15 @@ Project type: E-commerce web site
 								</span>
 							</div>
 						</div>
-
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Proceed to Checkout
-						</button>
+						<form action="<?= URLROOT?>ElectroSite/User/checkLogin" method="POST">
+							<?php foreach ($data['products'] as $panier) : ?>
+									<input type="text" name="products[]" value="<?= $panier['id_product'] ?>" class="hiddenInp" hidden>
+									<input type="text" name="quantity[]" value="<?= $panier['quantity'] ?>" id="quantite" hidden>
+								<?php endforeach ?>
+							<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+								Proceed to Checkout
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
