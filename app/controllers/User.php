@@ -1,6 +1,7 @@
 <?php
 
 class User extends Controller{
+
     protected $pdo;
     protected $users;
 
@@ -52,7 +53,6 @@ class User extends Controller{
                 'total' => 666
             ];
 
-            // print_r($data);die();
             $this->users->addtocart($data);
 
             header('Location:'.URLROOT.'ElectroSite/public/Pages/cart');
@@ -107,8 +107,6 @@ class User extends Controller{
             die('done');
             header('Location:'.URLROOT.'ElectroSite/public/Pages/cart');
 
-
-
         }
     }
     //--------------------------------------------
@@ -142,7 +140,7 @@ class User extends Controller{
                 
                 if ($this->users->finishCommande()) {
                     $this->users->clearPanier();
-                    $this->view('Templates/products');
+                    $this->view('Templates/');
                 } else {
                     die('SOMETHING WRONG ???');
                 }

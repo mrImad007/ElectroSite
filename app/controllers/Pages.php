@@ -68,12 +68,14 @@ class Pages extends Controller{
     public function entry(){
         $this->view('Templates/UserSign');
     }
+    //------------------------------------------------------
+    public function registerForms(){
+        $this->view('Templates/Register');
+    }
 
     //------------------------------------------------------
     public function error(){
         $this->view('Templates/error');
     }
-
-    
 }
 ?>
