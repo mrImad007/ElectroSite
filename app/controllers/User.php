@@ -140,7 +140,7 @@ class User extends Controller{
                 
                 if ($this->users->finishCommande()) {
                     $this->users->clearPanier();
-                    $this->view('Templates/Cart');
+                    $this->view('Templates/index');
                 } else {
                     die('SOMETHING WRONG ???');
                 }
@@ -150,6 +150,37 @@ class User extends Controller{
         }
     }
 }
+    //--------------------------------------------
+    public function userCommands(){
+        if(isset($_POST['user_id'])){
+            $user_id = $_POST['user_id'];
+            $commands = $this->users->getCommands($user_id);
+
+        }
+    }
+
+    //--------------------------------------------
+    public function acceptCommands(){
+        if(isset($_POST['command_id'])){
+            $data = [
+                'shipping_date' => date('d-m-y'),
+                'id' => $_POST['command_id']
+            ];
+
+            $this->users->accept($data);
+            die("accepted");
+        }
+    }
+
+    //--------------------------------------------
+    public function rejectCommands(){
+        if(isset($_POST['command_id'])){
+            $id = $_POST['command_id'];
+
+            $this->users->reject($id);
+            die("rejected");
+        }
+    }
     //--------------------------------------------
     public function checkLogin(){
         
