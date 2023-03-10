@@ -85,7 +85,7 @@ class Users{
     public function createCommande($data) {
         $ttl = 0;
         $this->pdo->beginTransaction();
-        $this->pdo->prepare("INSERT INTO `commandes`(`creation_date`, `shipping_date`, `user_id`, `total_price`, `status`) VALUES (:crDate, NULL, :user, :ttl, NULL)");
+        $this->pdo->prepare("INSERT INTO `commandes`(`creation_date`, `shipping_date`, `user_id`, `total_price`) VALUES (:crDate, NULL, :user, :ttl)");
         
         $this->pdo->bind(':user', $data['id_client']->id);
         $this->pdo->bind(':crDate', $data['creation_date']);
