@@ -179,7 +179,7 @@ Project type: E-commerce web site
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
+						
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
@@ -246,7 +246,7 @@ Project type: E-commerce web site
 											</div>
 										</div>
 									</td>
-									<td class="column-5"><?= $prod['total_price']?> MAD</td>
+									<td class="column-5"><?= $prod['sellP']?> MAD</td>
 									<input type="hidden" name="productId" value="<?= $prod['id_product']?>">
 								</tr>
 							<?php endforeach;?>
@@ -254,11 +254,11 @@ Project type: E-commerce web site
 							</table>
 						</div>
 
-						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+						<!-- <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 								<button type="submit">Update Cart</button>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 		</form>
