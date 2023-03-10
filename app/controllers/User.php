@@ -124,9 +124,10 @@ class User extends Controller{
                 'id_client' => $id,
                 'creation_date' => date('d-m-y'),
             ];
-            
 
             $idCommande = $this->users->createCommande($data);
+            
+   
             if ($idCommande) {
 
                 for ($i = 0; $i < count($products); $i++){
@@ -138,7 +139,11 @@ class User extends Controller{
                     $this->users->addProductCommande($data);
                 }
                 
+                
                 if ($this->users->finishCommande()) {
+                    $total = $this->users->totalPrice($idCommande);
+                    $this->users->updatePrice($idCommande,$total);
+
                     $this->users->clearPanier();
                     $this->view('Templates/index');
                 } else {
@@ -168,7 +173,7 @@ class User extends Controller{
             ];
 
             $this->users->accept($data);
-            die("accepted");
+            header('Location:'.URLROOT.'ElectroSite/public/Admin/show');
         }
     }
 
@@ -178,7 +183,7 @@ class User extends Controller{
             $id = $_POST['command_id'];
 
             $this->users->reject($id);
-            die("rejected");
+            header('Location:'.URLROOT.'ElectroSite/public/Admin/show');
         }
     }
     //--------------------------------------------
