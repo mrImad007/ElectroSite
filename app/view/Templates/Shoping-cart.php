@@ -231,7 +231,7 @@ Project type: E-commerce web site
 										</div>
 									</td>
 									<td class="column-2"><?= $prod['label']?></td>
-									<td class="column-3"><?= $prod['sellP']?> MAD</td>
+									<td class="column-3-p"><?= $prod['sellP']?></td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -246,7 +246,7 @@ Project type: E-commerce web site
 											</div>
 										</div>
 									</td>
-									<td class="column-5"><?= $prod['sellP']?> MAD</td>
+									<td class="column-5-p"><?= $prod['sellP']?> MAD</td>
 									<input type="hidden" name="productId" value="<?= $prod['id_product']?>">
 								</tr>
 							<?php endforeach;?>
@@ -473,6 +473,44 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</script>
 <!--===============================================================================================-->
 	<script src="<?= URLROOT ?>/ElectroSite/public/js/main.js"></script>
+<!--===============================================================================================-->
+<script>
+    
+    let quantityInput = document.querySelector('.num-product').value;
+	console.log(quantityInput);
+    let priceElement = document.querySelector('.column-3-p').textContent;
+	console.log(priceElement);
+    let totalElement = document.querySelector('.column-5-p').textContent;
+    
+    
+    let price = parseInt(priceElement);
+    let total = price;
+
+    
+    document.querySelector('.btn-num-product-down').addEventListener('click', () => {
+  if (parseInt(quantityInput) > 1) {
+    quantityInput = parseInt(quantityInput) - 1;
+    total = price * parseInt(quantityInput);
+    totalElement = total + ' MAD';
+    document.querySelector('.column-5-p').textContent = totalElement; // Update text content here
+  } else if (parseInt(quantityInput) === 0) {
+    total = 0;
+    totalElement = total + ' MAD';
+    document.querySelector('.column-5-p').textContent = totalElement; // Update text content here
+  }
+});
+
+document.querySelector('.btn-num-product-up').addEventListener('click', () => {
+  quantityInput = parseInt(quantityInput) + 1;
+  qttInput = parseInt(quantityInput);
+  total = parseInt(price) * parseInt(qttInput);
+  totalElement = total + ' MAD';
+  document.querySelector('.column-5-p').textContent = totalElement; // Update text content here
+});
+
+</script>
+
+
 
 </body>
 </html>
