@@ -580,7 +580,7 @@
                             <div class="col-span-12 mt-5">
                                 <div class="grid gap-2 grid-cols-1 lg:grid-cols-1">
                                     <div class="bg-white p-4 shadow-lg rounded-lg">
-                                        <h1 class="font-bold text-base">Commandes</h1>
+                                        <h1 class="font-bold text-base">Pending Commandes</h1>
                                         <div class="mt-4">
                                             <div class="flex flex-col">
                                                 <div class="-my-2 overflow-x-auto">
@@ -701,6 +701,193 @@
                                                                                     </button>
                                                                                     <input type="hidden" name="command_id" value="<?= $commands['id']?>">
                                                                                 </form>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <?php endforeach; ?>
+                                                                <!-- end loop -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-12 mt-5">
+                                <div class="grid gap-2 grid-cols-1 lg:grid-cols-1">
+                                    <div class="bg-white p-4 shadow-lg rounded-lg">
+                                        <h1 class="font-bold text-base">Accepted Commandes</h1>
+                                        <div class="mt-4">
+                                            <div class="flex flex-col">
+                                                <div class="-my-2 overflow-x-auto">
+                                                    <div class="py-2 align-middle inline-block min-w-full">
+                                                        <div
+                                                            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white">
+                                                            <table class="min-w-full divide-y divide-gray-200">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">COMMAND ID</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">CREATION DATE</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">SHIPPING DATE</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">TOTAL PRICE</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">STATUS</span>
+                                                                            </div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <!-- start loop -->
+                                                                <?php foreach($data['accepted'] as $commands):?>
+                                                                <tbody class="bg-white divide-y divide-gray-200">
+                                                                    <tr>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <p><?= $commands['id']?></p>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <p><?= $commands['creation_date']?> </p>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <p><?= $commands['shipping_date']?> </p>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <div class="flex text-green-500">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="w-5 h-5 mr-1" fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    stroke="currentColor">
+                                                                                    <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                                </svg>
+                                                                                <p><?= $commands['total_price']?> MAD</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <div class="flex text-green-500">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="w-5 h-5 mr-1" fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    stroke="currentColor">
+                                                                                    <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                                </svg>
+                                                                                <p><?= $commands['status']?></p>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <?php endforeach; ?>
+                                                                <!-- end loop -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-12 mt-5">
+                                <div class="grid gap-2 grid-cols-1 lg:grid-cols-1">
+                                    <div class="bg-white p-4 shadow-lg rounded-lg">
+                                        <h1 class="font-bold text-base">Users</h1>
+                                        <div class="mt-4">
+                                            <div class="flex flex-col">
+                                                <div class="-my-2 overflow-x-auto">
+                                                    <div class="py-2 align-middle inline-block min-w-full">
+                                                        <div
+                                                            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white">
+                                                            <table class="min-w-full divide-y divide-gray-200">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">USER NAME</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">EMAIL</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">ADRESS</span>
+                                                                            </div>
+                                                                        </th>
+                                                                        <th
+                                                                            class="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                            <div class="flex cursor-pointer">
+                                                                                <span class="mr-2">PHONE</span>
+                                                                            </div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <!-- start loop -->
+                                                                <?php foreach($data['users'] as $user):?>
+                                                                <tbody class="bg-white divide-y divide-gray-200">
+                                                                    <tr>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <p><?= $user['name']?></p>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <p><?= $user['email']?> </p>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <p><?= $user['adress']?> </p>
+                                                                        </td>
+                                                                        <td
+                                                                            class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                            <div class="flex text-green-500">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="w-5 h-5 mr-1" fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    stroke="currentColor">
+                                                                                    <path stroke-linecap="round"
+                                                                                        stroke-linejoin="round"
+                                                                                        stroke-width="2"
+                                                                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                                </svg>
+                                                                                <p><?= $user['phone']?></p>
                                                                             </div>
                                                                         </td>
                                                                     </tr>

@@ -77,7 +77,6 @@ class Users{
         $this->pdo->prepare($query);
         $this->pdo->bind(':id', $data['id']);
         $this->pdo->bind(':qtt', $data['qtt']);
-        $this->pdo->bind(':ttl', $data['ttl']);
         $this->pdo->execute();
     }
 
@@ -123,11 +122,19 @@ class Users{
     }
 
     //--------------------------------------------
-    public function getAllCommands(){
-        $query = "SELECT * FROM `commandes` ";
+    public function getPendingCommands(){
+        $query = "SELECT * FROM `commandes` where `status` = 'pending' ";
         $this->pdo->prepare($query);
-        $commands = $this->pdo->resultSet();
-        return $commands;
+        $pending = $this->pdo->resultSet();
+        return $pending;
+    }
+
+    //--------------------------------------------
+    public function getAcceptedCommands(){
+        $query = "SELECT * FROM `commandes` where `status` = 'accepted'";
+        $this->pdo->prepare($query);
+        $accepted = $this->pdo->resultSet();
+        return $accepted;
     }
 
     //--------------------------------------------
@@ -172,7 +179,7 @@ class Users{
         
         $this->pdo->execute();
     }
-
+//-------------------------------------------
     public function facture($id){
         $query = "SELECT `products`.label, `products`.sellP, `commandes`.`id`,`commandes`.`total_price`, quantity FROM `product_command` INNER JOIN products ON products.id = product_command.id_product INNER JOIN commandes ON commandes.id = product_command.id_command WHERE id_command = :id";
         $this->pdo->prepare($query);
@@ -194,6 +201,36 @@ class Users{
         $this->pdo->bind(':email', $email);
         $id = $this->pdo->single();
         return $id;
+    }
+
+    //-------------------------------------------
+    public function getAllUsers(){
+        $query = "SELECT * FROM users";
+        $this->pdo->prepare($query);
+        $users = $this->pdo->resultSet();
+        return $users;
+    }
+
+    //-------------------------------------------
+    public function getProduct($name){
+        $query = "SELECT * FROM cart WHERE id_product = (SELECT id FROM products WHERE label = :namee)";
+        $this->pdo->prepare($query);
+        $this->pdo->bind(':namee', $name);
+        $resp = $this->pdo->resultSet();
+        return $resp;
+    }
+    //-------------------------------------------
+    public function updateQtt($qtt,$name) {
+        
+        $query = "  UPDATE `cart`
+                    SET `quantity` = :qtt
+                    WHERE id_product = (SELECT id FROM products WHERE label = :namee) ";
+
+        $this->pdo->prepare($query);
+        $this->pdo->bind(':qtt', $qtt);
+        $this->pdo->bind(':namee', $name);
+        
+        $this->pdo->execute();
     }
 }
 

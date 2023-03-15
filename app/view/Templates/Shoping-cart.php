@@ -51,10 +51,14 @@ Project type: E-commerce web site
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-							<i class="zmdi zmdi-search"></i>
+						<!-- <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+							<button></button>
+						</div> -->
+						<div class="log">
+						<a href="<?= URLROOT?>ElectroSite/User/logout">
+						<button>logout</button>
+						</a>
 						</div>
-
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
@@ -201,7 +205,7 @@ Project type: E-commerce web site
 		
 
 	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85" action="<?=URLROOT?>ElectroSite/User/updateCart" method="POST">
+	<form class="bg0 p-t-75 p-b-85" action="<?=URLROOT?>ElectroSite/User/updateProductCart" method="POST">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-10 m-lr-auto m-b-50">
@@ -212,8 +216,8 @@ Project type: E-commerce web site
 									<th class="column-1">Product</th>
 									<th class="column-2"></th>
 									<th class="column-3">Price</th>
-									<th class="column-4">Quantity</th>
-									<th class="column-5">Total</th>
+									<th class="column-2">Quantity</th>
+									<th class="column-2">Total</th>
 								</tr>
 								<!-- loop start  -->
 								<?php foreach($data['products'] as $prod) :?>
@@ -230,15 +234,15 @@ Project type: E-commerce web site
 											
 										</div>
 									</td>
-									<td class="column-2"><?= $prod['label']?></td>
-									<td class="column-3-p"><?= $prod['sellP']?></td>
-									<td class="column-4">
+									<td class="column-2"><?= $prod['label']?><input type="hidden" name="label[]" value="<?= $prod['label']?>"></td>
+									<td class="column-3"><?= $prod['sellP']?> MAD<input type="hidden" name="sellP[]" value="<?= $prod['label']?>"></td>
+									<td class="column-2">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 												<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="qtt" value="<?= $prod['quantity']?>">
+											<input class="mtext-104 cl3 txt-center num-product" type="number" name="qtt[]" value="<?= $prod['quantity']?>">
 											
 
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
@@ -246,28 +250,40 @@ Project type: E-commerce web site
 											</div>
 										</div>
 									</td>
-									<td class="column-5-p"><?= $prod['sellP']?> MAD</td>
-									<input type="hidden" name="productId" value="<?= $prod['id_product']?>">
+									<td class="column-5-p"><?= $prod['quantity'] *  $prod['sellP']?> MAD</td>
+									<input type="hidden" name="productId[]" value="<?= $prod['id_product']?>">
 								</tr>
 							<?php endforeach;?>
 								<!-- loop end -->
 							</table>
 						</div>
 
-						<!-- <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 								<button type="submit">Update Cart</button>
 							</div>
-						</div> -->
+						</div>
 					</div>
 				</div>
+				
 		</form>
 
 				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
 						<h4 class="mtext-109 cl2 p-b-30">
-							Confirmation
+							Confirmation : 
 						</h4>
+						<h2 class="mtext-100 cl2 p-b-30">
+						<?php 
+							$total = 0;
+							
+							foreach ($data['products'] as $prod) {
+								$subtotal = $prod['quantity'] * $prod['sellP'];
+								$total += $subtotal;
+							}
+						?>
+							Your Total : <?= $total?> MAD
+						</h2>
 
 						<form action="<?= URLROOT?>ElectroSite/User/checkLogin" method="POST">
 							<?php foreach ($data['products'] as $panier) : ?>
@@ -281,6 +297,17 @@ Project type: E-commerce web site
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="total">
+		<?php 
+			$total = 0;
+			
+			foreach ($data['products'] as $prod) {
+				$subtotal = $prod['quantity'] * $prod['sellP'];
+				$total += $subtotal;
+			}
+		?>
+		<p><?= $total.' MAD'?></p>
 		</div>
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
@@ -476,40 +503,22 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!--===============================================================================================-->
 <script>
     
-    let quantityInput = document.querySelector('.num-product').value;
-	console.log(quantityInput);
-    let priceElement = document.querySelector('.column-3-p').textContent;
-	console.log(priceElement);
-    let totalElement = document.querySelector('.column-5-p').textContent;
-    
-    
-    let price = parseInt(priceElement);
-    let total = price;
+	function calculateTotal() {
+	let total = 0;
+	const rows = document.querySelectorAll('.table_row');
+	rows.forEach((row) => {
+		const priceStr = row.querySelector('.column-5-p').textContent;
+		const price = Number(priceStr.replace('MAD', '').trim());
+		total += price;
+	});
+	return total;
+	const totalElement = document.getElementsByClassName('total').textContent;
+	totalElement = `${calculateTotal()} MAD`;
+	console.log(totalElement);
+	}
 
-    
-    document.querySelector('.btn-num-product-down').addEventListener('click', () => {
-  if (parseInt(quantityInput) > 1) {
-    quantityInput = parseInt(quantityInput) - 1;
-    total = price * parseInt(quantityInput);
-    totalElement = total + ' MAD';
-    document.querySelector('.column-5-p').textContent = totalElement; // Update text content here
-  } else if (parseInt(quantityInput) === 0) {
-    total = 0;
-    totalElement = total + ' MAD';
-    document.querySelector('.column-5-p').textContent = totalElement; // Update text content here
-  }
-});
-
-document.querySelector('.btn-num-product-up').addEventListener('click', () => {
-  quantityInput = parseInt(quantityInput) + 1;
-  qttInput = parseInt(quantityInput);
-  total = parseInt(price) * parseInt(qttInput);
-  totalElement = total + ' MAD';
-  document.querySelector('.column-5-p').textContent = totalElement; // Update text content here
-});
 
 </script>
-
 
 
 </body>

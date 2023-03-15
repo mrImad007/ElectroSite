@@ -43,9 +43,23 @@ class User extends Controller{
     }
 
     //--------------------------------------------
+    public function logout(){
+        if(isset($_SESSION['user'])){
+            session_start();
+            session_unset();
+            session_destroy();
+        }
+        header('Location:'.URLROOT.'ElectroSite/public/Pages/index');
+    }
+    //--------------------------------------------
     public function addCart(){
         if(isset($_POST['label']) && isset($_POST['qtt'])){
             
+            $name = $_POST['label'];
+            $qtt = $_POST['qtt'];
+            $response = $this->users->getProduct($name);
+
+            if(!$response){
             $data = [
                 'user' => 'imad',
                 'label' => $_POST['label'],
@@ -54,6 +68,10 @@ class User extends Controller{
             ];
 
             $this->users->addtocart($data);
+
+            }else{
+                $this->users->updateQtt($qtt,$name);
+            }
 
             header('Location:'.URLROOT.'ElectroSite/public/Pages/cart');
         }
@@ -107,6 +125,23 @@ class User extends Controller{
             die('done');
             header('Location:'.URLROOT.'ElectroSite/public/Pages/cart');
 
+        }
+    }
+
+    public function updateProductCart() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            for ($i = 0; $i < count($_POST['productId']); $i++) {
+                $data = [
+                    'id' => $_POST['productId'][$i],
+                    'qtt' => $_POST['qtt'][$i],
+                ];
+                
+                $this->users->updateCart($data);
+            }
+
+            
+                header('Location:'.URLROOT.'ElectroSite/public/Pages/cart');
+            
         }
     }
     //--------------------------------------------

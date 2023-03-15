@@ -14,8 +14,10 @@ class Pages extends Controller{
     //------------------------------------------------------
     public function index(){
         $prod = $this->UsersModel->seeCart();
+        $products = $this->CrudModel->read();
         $data = [
-            'products' => $prod
+            'products' => $prod,
+            'stock' => $products
         ];
        $this->view('Templates/index',$data);
     }

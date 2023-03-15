@@ -19,12 +19,16 @@ class Admin extends Controller{
         if(isset($_SESSION['admin'])){
             $products = $this->CrudModel->read();
             $category = $this->CrudModel->category();
-            $commands = $this->users->getAllCommands();
+            $commands = $this->users->getPendingCommands();
+            $accepted = $this->users->getAcceptedCommands();
+            $users = $this->users->getAllUsers();
             
             $data= [
                 'products' => $products,
                 'category' => $category,
                 'commands' => $commands,
+                'accepted' => $accepted,
+                'users' => $users
             ];
 
             $this->view('Templates/Dashboard',$data);
